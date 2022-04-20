@@ -34,8 +34,26 @@ h1,
 h2,
 h3,
 p,
-li {
+li,
+button {
     font-family: var(--font-family);
+}
+
+button {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 1rem 16px;
+    box-shadow: var(--shadow-elevation-medium);
+    transition: color 0.5s;
+    transition-timing-function: cubic-bezier(0, 1, .52, .99);
+
+}
+
+button:hover {
+    color: var(--color-text-accent);
 }
 
 .wrapper {
