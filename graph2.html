@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.8/d3.min.js" type="text/JavaScript"></script>
+    <script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
     <title>
-        <!-- Enter type of graph name -->
+        Countries organization in World Cup 2018
     </title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -26,14 +26,165 @@
                     </ul>
                 </nav>
                 <h1>
-                    <!-- Enter type of graph name -->
+                    Countries organization in World Cup 2018
                 </h1>
             </div>
         </header>
         <div class="container">
-            <svg></svg>
+            <br>
+            <br>
+            <button class="groups" onclick="cGroups()">Countries divided by groups</button>&nbsp;&nbsp;
+            <button class="last16" onclick="cLast16()">Last 16 countries</button>&nbsp;&nbsp;
+            <button class="qFinals" onclick="cQFinals()">Countries in Quarter Finals</button>&nbsp;&nbsp;
+            <br><br>
+            <button class="sFinals" onclick="cSFinals()">Countries in Semi Finals</button>&nbsp;&nbsp;
+            <button class="finals" onclick="cFinals()">Countries in Finals</button>&nbsp;&nbsp;
+            <button class="winner" onclick="cWinner()">World Cup 2018 Winner</button>&nbsp;&nbsp;
+            <br><br>
+            <svg style="width:900px;height:900px;border:1px lightgray solid;"></svg>
         </div>
     </div>
+    <script>
+        var worldCupLast16 = [];
+        var worldCupQFinals = [];
+        var worldCupSFinals = [];
+        var worldCupFinals = [];
+        var worldCupWinner = [];
+        var WorldCupGroupA = [];
+        var WorldCupGroupB = [];
+        var WorldCupGroupC = [];
+        var WorldCupGroupD = [];
+        var WorldCupGroupE = [];
+        var WorldCupGroupF = [];
+        var WorldCupGroupG = [];
+        var WorldCupGroupH = [];
+
+        var PromiseWrapper = (xhr, d) => new Promise(resolve => xhr(d, (p) => resolve(p)));
+
+        Promise
+            .all([
+                PromiseWrapper(d3.json, "data/world.geojson"),
+                PromiseWrapper(d3.csv, "data/World_cup_2018_country.csv")
+            ])
+            .then(resolve => {
+                createMap(resolve[0], resolve[1]);
+            });
+
+        function createMap(countries, worldcup) {
+                
+            worldcup.forEach(d => {
+                if (d.Last16 == 'Y') {
+                    worldCupLast16.push(d.Country);
+                }
+                if (d.QFinals == 'Y') {
+                    worldCupQFinals.push(d.Country);
+                }
+                if (d.SFinals == 'Y') {
+                    worldCupSFinals.push(d.Country);
+                }
+                if (d.Finals == 'Y') {
+                    worldCupFinals.push(d.Country);
+                }
+                if (d.Winner == 'Y') {
+                    worldCupWinner.push(d.Country);
+                }
+
+                switch(d.Group){
+                    case "A":
+                        WorldCupGroupA.push(d.Country);
+                        break;
+                    case "B":
+                        WorldCupGroupB.push(d.Country);
+                        break;
+                    case "C":
+                        WorldCupGroupC.push(d.Country);
+                        break;
+                    case "D":
+                        WorldCupGroupD.push(d.Country);
+                        break;
+                    case "E":
+                        WorldCupGroupE.push(d.Country);
+                        break;
+                    case "F":
+                        WorldCupGroupF.push(d.Country);
+                        break;
+                    case "G":
+                        WorldCupGroupG.push(d.Country);
+                        break;
+                    case "H":
+                        WorldCupGroupH.push(d.Country);
+                        break;
+                }
+
+            });
+        
+            var projection = d3.geoMercator()
+                .scale(150)
+                .translate([430, 450]);
+
+            var geoPath = d3.geoPath().projection(projection);
+
+            d3.select("svg")
+                .selectAll("path")
+                .data(countries.features)
+                .enter()
+                .append("path")
+                .attr("d", geoPath)
+                .attr("class", "countries")
+                .style("fill", "#000000");
+        }
+
+        function cGroups(){
+            d3.selectAll("path.countries").style("fill", "#000000");
+            d3.selectAll("path.countries")
+            .filter(d => WorldCupGroupA.includes(d.properties.name)).style("fill", "#1b9e77");
+            d3.selectAll("path.countries")
+            .filter(d => WorldCupGroupB.includes(d.properties.name)).style("fill", "#d95f02");
+            d3.selectAll("path.countries")
+            .filter(d => WorldCupGroupC.includes(d.properties.name)).style("fill", "#7570b3");
+            d3.selectAll("path.countries")
+            .filter(d => WorldCupGroupD.includes(d.properties.name)).style("fill", "#e7298a");
+            d3.selectAll("path.countries")
+            .filter(d => WorldCupGroupE.includes(d.properties.name)).style("fill", "#66a61e");
+            d3.selectAll("path.countries")
+            .filter(d => WorldCupGroupF.includes(d.properties.name)).style("fill", "#e6ab02");
+            d3.selectAll("path.countries")
+            .filter(d => WorldCupGroupG.includes(d.properties.name)).style("fill", "#a6761d");
+            d3.selectAll("path.countries")
+            .filter(d => WorldCupGroupH.includes(d.properties.name)).style("fill", "#666666");
+        }
+
+        function cLast16(){
+            d3.selectAll("path.countries").style("fill", "#000000");
+            d3.selectAll("path.countries")
+            .filter(d => worldCupLast16.includes(d.properties.name)).style("fill", "#e41a1c");
+        }
+
+        function cQFinals() {
+            d3.selectAll("path.countries").style("fill", "#000000");
+            d3.selectAll("path.countries")
+            .filter(d => worldCupQFinals.includes(d.properties.name)).style("fill", "#ff7f00");
+        }
+
+        function cSFinals() {
+            d3.selectAll("path.countries").style("fill", "#000000");
+            d3.selectAll("path.countries")
+            .filter(d => worldCupSFinals.includes(d.properties.name)).style("fill", "#984ea3");
+        }
+
+        function cFinals() {
+            d3.selectAll("path.countries").style("fill", "#000000");
+            d3.selectAll("path.countries")
+            .filter(d => worldCupFinals.includes(d.properties.name)).style("fill", "#377eb8");
+        }
+
+        function cWinner() {
+            d3.selectAll("path.countries").style("fill", "#000000");
+            d3.selectAll("path.countries")
+            .filter(d => worldCupWinner.includes(d.properties.name)).style("fill", "#4daf4a");
+        }
+
+    </script>
 </body>
 
 </html>
