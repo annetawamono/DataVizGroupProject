@@ -32,12 +32,15 @@
         </header>
         <div class="container">
             <svg style="width:700px;height:550px;border:1px lightgray solid;"></svg>
-            <br>
-            <br>
-            <text class="extraInfo">  Click in the purple circles to see more information. <br> </text>
-            <br>
-            <br>
+            <text class="extraInfo"> Click in the purple circles to see more information. <br> </text>
         </div>
+        <footer>
+            <div class="container">
+                <p>Group project by: <a href="https://github.com/annetawamono" target="_blank">Anneta</a>, <a
+                        href="https://github.com/fmmoliver" target="_blank">Fernanda</a>, <a
+                        href="https://github.com/khushboo84" target="_blank">Khushboo</a></p>
+            </div>
+        </footer>
     </div>
     <script>
         d3.json("data/World_cup_2018_goals_country.json", incomingData => viz(incomingData));
@@ -51,7 +54,7 @@
             const packableCountries = { id: "All Countries", values: nestedCountries };
             console.log("countries ok!", packableCountries);
 
-            const root = d3.hierarchy(packableCountries, d => d.values).sum(d=> d.numbergoals);
+            const root = d3.hierarchy(packableCountries, d => d.values).sum(d => d.numbergoals);
 
             /* Creating layout */
             const packChart = d3.pack().padding(8).size([500, 550]);
@@ -75,7 +78,7 @@
                     d3.select("text.extraInfo")
                         .text(`Group: ${d.group}, Country: ${d.country}, Number of goals: ${d.numbergoals}.`);
                 }
-                else{
+                else {
                     d3.select("text.extraInfo")
                         .text("Click in the purple circles to see more information.");
                 }

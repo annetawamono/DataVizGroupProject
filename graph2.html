@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,6 +44,13 @@
             <br><br>
             <svg style="width:900px;height:900px;border:1px lightgray solid;"></svg>
         </div>
+        <footer>
+            <div class="container">
+                <p>Group project by: <a href="https://github.com/annetawamono" target="_blank">Anneta</a>, <a
+                        href="https://github.com/fmmoliver" target="_blank">Fernanda</a>, <a
+                        href="https://github.com/khushboo84" target="_blank">Khushboo</a></p>
+            </div>
+        </footer>
     </div>
     <script>
         var worldCupLast16 = [];
@@ -71,7 +79,7 @@
             });
 
         function createMap(countries, worldcup) {
-                
+
             worldcup.forEach(d => {
                 if (d.Last16 == 'Y') {
                     worldCupLast16.push(d.Country);
@@ -89,7 +97,7 @@
                     worldCupWinner.push(d.Country);
                 }
 
-                switch(d.Group){
+                switch (d.Group) {
                     case "A":
                         WorldCupGroupA.push(d.Country);
                         break;
@@ -117,7 +125,7 @@
                 }
 
             });
-        
+
             var projection = d3.geoMercator()
                 .scale(150)
                 .translate([430, 450]);
@@ -134,54 +142,54 @@
                 .style("fill", "#000000");
         }
 
-        function cGroups(){
+        function cGroups() {
             d3.selectAll("path.countries").style("fill", "#000000");
             d3.selectAll("path.countries")
-            .filter(d => WorldCupGroupA.includes(d.properties.name)).style("fill", "#1b9e77");
+                .filter(d => WorldCupGroupA.includes(d.properties.name)).style("fill", "#1b9e77");
             d3.selectAll("path.countries")
-            .filter(d => WorldCupGroupB.includes(d.properties.name)).style("fill", "#d95f02");
+                .filter(d => WorldCupGroupB.includes(d.properties.name)).style("fill", "#d95f02");
             d3.selectAll("path.countries")
-            .filter(d => WorldCupGroupC.includes(d.properties.name)).style("fill", "#7570b3");
+                .filter(d => WorldCupGroupC.includes(d.properties.name)).style("fill", "#7570b3");
             d3.selectAll("path.countries")
-            .filter(d => WorldCupGroupD.includes(d.properties.name)).style("fill", "#e7298a");
+                .filter(d => WorldCupGroupD.includes(d.properties.name)).style("fill", "#e7298a");
             d3.selectAll("path.countries")
-            .filter(d => WorldCupGroupE.includes(d.properties.name)).style("fill", "#66a61e");
+                .filter(d => WorldCupGroupE.includes(d.properties.name)).style("fill", "#66a61e");
             d3.selectAll("path.countries")
-            .filter(d => WorldCupGroupF.includes(d.properties.name)).style("fill", "#e6ab02");
+                .filter(d => WorldCupGroupF.includes(d.properties.name)).style("fill", "#e6ab02");
             d3.selectAll("path.countries")
-            .filter(d => WorldCupGroupG.includes(d.properties.name)).style("fill", "#a6761d");
+                .filter(d => WorldCupGroupG.includes(d.properties.name)).style("fill", "#a6761d");
             d3.selectAll("path.countries")
-            .filter(d => WorldCupGroupH.includes(d.properties.name)).style("fill", "#666666");
+                .filter(d => WorldCupGroupH.includes(d.properties.name)).style("fill", "#666666");
         }
 
-        function cLast16(){
+        function cLast16() {
             d3.selectAll("path.countries").style("fill", "#000000");
             d3.selectAll("path.countries")
-            .filter(d => worldCupLast16.includes(d.properties.name)).style("fill", "#e41a1c");
+                .filter(d => worldCupLast16.includes(d.properties.name)).style("fill", "#e41a1c");
         }
 
         function cQFinals() {
             d3.selectAll("path.countries").style("fill", "#000000");
             d3.selectAll("path.countries")
-            .filter(d => worldCupQFinals.includes(d.properties.name)).style("fill", "#ff7f00");
+                .filter(d => worldCupQFinals.includes(d.properties.name)).style("fill", "#ff7f00");
         }
 
         function cSFinals() {
             d3.selectAll("path.countries").style("fill", "#000000");
             d3.selectAll("path.countries")
-            .filter(d => worldCupSFinals.includes(d.properties.name)).style("fill", "#984ea3");
+                .filter(d => worldCupSFinals.includes(d.properties.name)).style("fill", "#984ea3");
         }
 
         function cFinals() {
             d3.selectAll("path.countries").style("fill", "#000000");
             d3.selectAll("path.countries")
-            .filter(d => worldCupFinals.includes(d.properties.name)).style("fill", "#377eb8");
+                .filter(d => worldCupFinals.includes(d.properties.name)).style("fill", "#377eb8");
         }
 
         function cWinner() {
             d3.selectAll("path.countries").style("fill", "#000000");
             d3.selectAll("path.countries")
-            .filter(d => worldCupWinner.includes(d.properties.name)).style("fill", "#4daf4a");
+                .filter(d => worldCupWinner.includes(d.properties.name)).style("fill", "#4daf4a");
         }
 
     </script>
