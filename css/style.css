@@ -193,8 +193,9 @@ footer a {
 }
 
 .container {
-    width: 80%;
     max-width: var(--max-container);
     margin-left: auto;
     margin-right: auto;
+    padding-inline-start: 16px;
+    padding-inline-end: 16px;
 }
