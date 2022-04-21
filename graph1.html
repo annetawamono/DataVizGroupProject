@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.8/d3.min.js" type="text/JavaScript"></script>
     <title>
-        <!-- Enter type of graph name -->
+        Countries organization in knockout phase
     </title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -26,12 +26,12 @@
                     </ul>
                 </nav>
                 <h1>
-                    <!-- Enter type of graph name -->
+                    Countries organization in knockout phase
                 </h1>
             </div>
         </header>
         <div class="container">
-            <svg></svg>
+            <svg width="800" height="700"></svg>
         </div>
         <footer>
             <div class="container">
@@ -40,6 +40,92 @@
                         href="https://github.com/khushboo84" target="_blank">Khushboo</a></p>
             </div>
         </footer>
+        <script>
+            d3.csv("./data/World_cup_2018_country.csv", viz)
+
+            function viz(data) {
+                console.log("🚀 ~ file: graph1.html ~ line 47 ~ viz ~ data", data)
+                let formattedData = []
+                let winner
+
+                const pushCountryStage = (c, s) => {
+                    formattedData.push({
+                        country: c,
+                        stage: s
+                    })
+                }
+
+                data.forEach((d) => {
+                    if (d.Last16 === "Y") {
+                        pushCountryStage(d.Country, "Last16")
+                    }
+
+                    if (d.QFinals === "Y") {
+                        pushCountryStage(d.Country, "QFinals")
+                    }
+
+                    if (d.SFinals === "Y") {
+                        pushCountryStage(d.Country, "SFinals")
+                    }
+
+                    if (d.Winner === "Y") {
+                        pushCountryStage(d.Country, "Winner")
+                        winner = d.Winner
+                    }
+
+                })
+                console.log("🚀 ~ file: graph1.html ~ line 82 ~ viz ~ formattedData", formattedData)
+
+                const scaleOrdinal = d3.scaleOrdinal().range(["green", "blue", "purple", "red"])
+
+                const nestedData = d3.nest().key(d => d.country).entries(formattedData)
+
+                const packableData = { id: winner, values: nestedData }
+
+                const root = d3.hierarchy(packableData, d => d.values)
+
+                const treeChart = d3.tree().size([800, 700])
+
+                const treeData = treeChart(root).descendants();
+
+                d3.selectAll("svg")
+                    .append("g")
+                    .attr("id", "treeG")
+                    .attr("transform", "translate(0,0)")
+                    .selectAll("g")
+                    .data(treeData)
+                    .enter()
+                    .append("g")
+                    .attr("class", "node")
+                    .attr("transform", d => `translate(${d.y}, ${d.x})`)
+
+                d3.selectAll("g.node")
+                    .append("circle")
+                    .attr("r", d => 5)
+                    .style("fill", d => scaleOrdinal(d.depth))
+                    .style("stroke", "black")
+                    .style("stroke-width", "1px")
+
+                d3.selectAll("g.node")
+                    .append("text")
+                    .attr("transform", "translate(0,-15)")
+                    .style("text-anchor", "middle")
+                    .style("fill", "black")
+                    .text(d => d.data.id || d.data.key || d.data.stage)
+
+                d3.select("#treeG")
+                    .selectAll("line")
+                    .data(treeData.filter(d => d.parent))
+                    .enter()
+                    .insert("line", "g")
+                    .attr("x1", d => d.parent.y)
+                    .attr("y1", d => d.parent.x)
+                    .attr("x2", d => d.y)
+                    .attr("y2", d => d.x)
+                    .style("stroke", "black")
+                    .style("stroke-width", "1px")
+            }
+        </script>
     </div>
 </body>
 
