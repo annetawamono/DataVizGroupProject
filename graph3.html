@@ -32,9 +32,9 @@
             </div>
         </header>
         <div class="container">
-            <svg style="width:1000px; height:900px; padding:20px"></svg>
+            <text class="nameCountry">Click in the bar to see the country name.</text>
+            <svg style="width:1000px; height:550px; padding:20px"></svg>
         </div>
-
         <script>
         
             d3.csv("data/World_cup_2018_goals_by_day.csv", dataViz);
@@ -98,15 +98,22 @@
                         .attr("y", p => yScale(p[1]))
                         .attr("height", p => heightScale(p[1] - p[0]))
                         .attr("width", 20)
-                        .style("fill", fillScale(d.key));
+                        .style("fill", fillScale(d.key))
+                        .attr("countryName", d.key)
+                        .on("click", () => {
+                            d3.select("text.nameCountry")             
+                            //.style("width", "100px")
+                            //.attr("transform", "translate(50, 550)")
+                            .text(this.childNodes[0].getAttribute("countryName"));
+                            //alert()
+                        });
                     });
 
                     d3.select("svg").append("text")             
                         .style("width", "1000px")
                         .attr("transform", "translate(250, 550)")
                         .text("Day 1st to 25th of World Cup 2018");
-    
-                }
+            }
     
         </script>  
 
