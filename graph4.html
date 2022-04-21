@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.8/d3.min.js" type="text/JavaScript"></script>
     <title>
-        <!-- Enter type of graph name -->
+        Number of goals by group and country
     </title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -26,14 +26,64 @@
                     </ul>
                 </nav>
                 <h1>
-                    <!-- Enter type of graph name -->
+                    Number of goals by group and country
                 </h1>
             </div>
         </header>
         <div class="container">
-            <svg></svg>
+            <svg style="width:700px;height:550px;border:1px lightgray solid;"></svg>
+            <br>
+            <br>
+            <text class="extraInfo">  Click in the purple circles to see more information. <br> </text>
+            <br>
+            <br>
         </div>
     </div>
+    <script>
+        d3.json("data/World_cup_2018_goals_country.json", incomingData => viz(incomingData));
+
+        function viz(data) {
+            console.log("file okay!", data);
+
+            const depthScale = d3.scaleOrdinal().range(["#377eb8", "#4daf4a", "#984ea3"]);
+            const nestedCountries = d3.nest().key(d => d.group).entries(data.countries);
+
+            const packableCountries = { id: "All Countries", values: nestedCountries };
+            console.log("countries ok!", packableCountries);
+
+            const root = d3.hierarchy(packableCountries, d => d.values).sum(d=> d.numbergoals);
+
+            /* Creating layout */
+            const packChart = d3.pack().padding(8).size([500, 550]);
+
+            d3.select("svg")
+                .append("g")
+                .attr("transform", "translate(100, 0)")
+                .selectAll("circle")
+                .data(packChart(root).descendants())
+                .enter()
+                .append("circle")
+                .attr("r", d => d.r)
+                .attr("cx", d => d.x)
+                .attr("cy", d => d.y)
+                .style("fill", d => depthScale(d.depth))
+                .style("stroke", "black")
+                .on("click", d => buttonClick(d.data));
+
+            function buttonClick(d) {
+                if (d.group != undefined) {
+                    d3.select("text.extraInfo")
+                        .text(`Group: ${d.group}, Country: ${d.country}, Number of goals: ${d.numbergoals}.`);
+                }
+                else{
+                    d3.select("text.extraInfo")
+                        .text("Click in the purple circles to see more information.");
+                }
+            }
+
+        }
+
+    </script>
 </body>
 
 </html>
