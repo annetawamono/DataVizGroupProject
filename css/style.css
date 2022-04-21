@@ -178,3 +178,8 @@ footer {
 footer a {
     color: var(--color-text-accent);
 }
+
+/* For legend sizing in graph 3 */
+.swatch{
+    height: 14px;
+}
