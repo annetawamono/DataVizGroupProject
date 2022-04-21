@@ -2,6 +2,7 @@
 
 :root {
     --font-family: 'Rubik', sans-serif;
+
     --shadow-color: 0deg 0% 63%;
     --shadow-elevation-medium:
         0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
@@ -17,11 +18,18 @@
         11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
         17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
         25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
+
     --color-black: hsl(228, 25%, 12%);
     --color-white: hsl(327, 31%, 93%);
     --color-text-primary: var(--color-black);
     --color-text-secondary: var(--color-white);
     --color-text-accent: hsl(211, 31%, 75%);
+
+    --padding-1: 20px;
+    --padding-2: 40px;
+    --padding-3: 60px;
+    --padding-4: 80px;
+    --padding-5: 100px;
 }
 
 html,
@@ -120,6 +128,17 @@ nav a.active {
 nav a:hover {
     color: var(--color-text-secondary);
 }
+
+/* Utilities */
+.pt-1 {
+    padding-top: var(--padding-1);
+}
+
+.pb-1 {
+    padding-bottom: var(--padding-1);
+}
+
+/* Components */
 
 .cards {
     display: flex;
