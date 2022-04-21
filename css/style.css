@@ -2,6 +2,9 @@
 
 :root {
     --font-family: 'Rubik', sans-serif;
+
+    --max-container: 800px;
+
     --shadow-color: 0deg 0% 63%;
     --shadow-elevation-medium:
         0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
@@ -17,11 +20,18 @@
         11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
         17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
         25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
+
     --color-black: hsl(228, 25%, 12%);
     --color-white: hsl(327, 31%, 93%);
     --color-text-primary: var(--color-black);
     --color-text-secondary: var(--color-white);
     --color-text-accent: hsl(211, 31%, 75%);
+
+    --padding-1: 20px;
+    --padding-2: 40px;
+    --padding-3: 60px;
+    --padding-4: 80px;
+    --padding-5: 100px;
 }
 
 html,
@@ -39,6 +49,8 @@ button,
 text {
     font-family: var(--font-family);
 }
+
+/* Components */
 
 text {
     display: block;
@@ -63,24 +75,11 @@ button:hover {
     color: var(--color-text-accent);
 }
 
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-}
-
-.container {
-    width: 80%;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 header {
     height: 30vh;
     max-height: 216px;
     background: url('../images/header.jpg');
-    /* Fallback fro old images */
+    /* Fallback for old images */
     background: url('../images/header.jpg') center no-repeat;
     background-size: cover, contain;
     background-color: rgba(0, 0, 0, 0.683);
@@ -124,7 +123,7 @@ nav a:hover {
 .cards {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 10px 20px;
 }
@@ -138,9 +137,7 @@ nav a:hover {
     transition: box-shadow 0.8s;
     transition-timing-function: cubic-bezier(0, 1, .52, .99);
 
-    /* TODO: Fix cards on mobile */
-    width: 20%;
-    /* min-width: 300px; */
+    width: calc((var(--max-container) / 4) - 20px);
 }
 
 .card>a {
@@ -179,7 +176,26 @@ footer a {
     color: var(--color-text-accent);
 }
 
-/* For legend sizing in graph 3 */
-.swatch{
-    height: 14px;
+/* Utilities */
+.pt-1 {
+    padding-top: var(--padding-1);
+}
+
+.pb-1 {
+    padding-bottom: var(--padding-1);
+}
+
+/* Layout */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.container {
+    max-width: var(--max-container);
+    margin-left: auto;
+    margin-right: auto;
+    padding-inline-start: 16px;
+    padding-inline-end: 16px;
 }
