@@ -71,9 +71,14 @@
                 .on("click", d => buttonClick(d.data));
 
             function buttonClick(d) {
-                //alert(`${d.country}. With ${d.numbergoals} number of goals.`);
-                d3.select("text.extraInfo")
-                    .text(`Group: ${d.group}, Country: ${d.country}, Number of goals: ${d.numbergoals}.`);
+                if (d.group != undefined) {
+                    d3.select("text.extraInfo")
+                        .text(`Group: ${d.group}, Country: ${d.country}, Number of goals: ${d.numbergoals}.`);
+                }
+                else{
+                    d3.select("text.extraInfo")
+                        .text("Click in the purple circles to see more information.");
+                }
             }
 
         }
