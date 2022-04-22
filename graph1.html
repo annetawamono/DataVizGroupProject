@@ -31,6 +31,7 @@
             </div>
         </header>
         <div class="container">
+            <p class="pt-1 pb-1">Click and drag to move tree. Hover over circles for more information</p>
             <svg width="800" height="700"></svg>
         </div>
         <footer>
@@ -41,57 +42,23 @@
             </div>
         </footer>
         <script>
-            d3.csv("./data/World_cup_2018_country.csv", viz)
+            d3.json("./data/knockouts.json", viz)
 
             function viz(data) {
                 console.log("🚀 ~ file: graph1.html ~ line 47 ~ viz ~ data", data)
-                let formattedData = []
-                let winner
 
-                const pushCountryStage = (c, s) => {
-                    formattedData.push({
-                        country: c,
-                        stage: s
-                    })
-                }
+                const scaleOrdinal = d3.scaleOrdinal().range(["green", "blue", "purple", "red", "orange"])
 
-                data.forEach((d) => {
-                    if (d.Last16 === "Y") {
-                        pushCountryStage(d.Country, "Last16")
-                    }
+                const root = d3.hierarchy(data)
 
-                    if (d.QFinals === "Y") {
-                        pushCountryStage(d.Country, "QFinals")
-                    }
-
-                    if (d.SFinals === "Y") {
-                        pushCountryStage(d.Country, "SFinals")
-                    }
-
-                    if (d.Winner === "Y") {
-                        pushCountryStage(d.Country, "Winner")
-                        winner = d.Winner
-                    }
-
-                })
-                console.log("🚀 ~ file: graph1.html ~ line 82 ~ viz ~ formattedData", formattedData)
-
-                const scaleOrdinal = d3.scaleOrdinal().range(["green", "blue", "purple", "red"])
-
-                const nestedData = d3.nest().key(d => d.country).entries(formattedData)
-
-                const packableData = { id: winner, values: nestedData }
-
-                const root = d3.hierarchy(packableData, d => d.values)
-
-                const treeChart = d3.tree().size([800, 700])
+                const treeChart = d3.tree().size([1000, 800])
 
                 const treeData = treeChart(root).descendants();
 
                 d3.selectAll("svg")
                     .append("g")
                     .attr("id", "treeG")
-                    .attr("transform", "translate(0,0)")
+                    .attr("transform", "translate(100,0)")
                     .selectAll("g")
                     .data(treeData)
                     .enter()
@@ -101,17 +68,28 @@
 
                 d3.selectAll("g.node")
                     .append("circle")
-                    .attr("r", d => 5)
+                    .attr("r", 10)
                     .style("fill", d => scaleOrdinal(d.depth))
                     .style("stroke", "black")
                     .style("stroke-width", "1px")
+                    .on("mouseenter", d => showHide("mouseenter", d))
+                    .on("mouseleave", d => showHide("mouseleave", d))
 
                 d3.selectAll("g.node")
                     .append("text")
                     .attr("transform", "translate(0,-15)")
                     .style("text-anchor", "middle")
                     .style("fill", "black")
-                    .text(d => d.data.id || d.data.key || d.data.stage)
+                    .text(d => d.data?.name)
+
+                d3.selectAll("g.node")
+                    .append("text")
+                    .attr("transform", "translate(0,-45)")
+                    .attr("id", d => `match${d.data?.id}`)
+                    .style("text-anchor", "middle")
+                    .style("fill", d => scaleOrdinal(d.depth))
+                    .style("opacity", 0)
+                    .text(d => d.data?.stage)
 
                 d3.select("#treeG")
                     .selectAll("line")
@@ -124,6 +102,22 @@
                     .attr("y2", d => d.x)
                     .style("stroke", "black")
                     .style("stroke-width", "1px")
+
+                const treeZoom = d3.zoom().on("zoom", zoomed)
+
+                d3.select("svg").call(treeZoom)
+
+                function zoomed() {
+                    d3.select("#treeG")
+                        .attr("transform", `translate(${d3.event.transform.x}, ${d3.event.transform.y})`)
+                }
+
+                function showHide(e, d) {
+                    d3.select(`#match${d.data?.id}`)
+                        .style("opacity", e === "mouseenter" ? 1 : 0)
+                }
+
+
             }
         </script>
     </div>

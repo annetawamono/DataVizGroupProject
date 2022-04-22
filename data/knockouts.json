@@ -1,0 +1,96 @@
+{
+    "name": "France",
+    "stage": "Winner",
+    "id": 1,
+    "children": [
+        {
+            "name": "France vs Croatia",
+            "stage": "Finals",
+            "id": 2,
+            "children": [
+                {
+                    "name": "France vs Belgium",
+                    "stage": "Semi Finals",
+                    "id": 3,
+                    "children": [
+                        {
+                            "name": "France vs Uruguay",
+                            "stage": "Quater Finals",
+                            "id": 5,
+                            "children": [
+                                {
+                                    "name": "France vs Argentina",
+                                    "stage": "Last 16",
+                                    "id": 9
+                                },
+                                {
+                                    "name": "Uruguay vs Portugal",
+                                    "stage": "Last 16",
+                                    "id": 10
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Belgium vs Brazil",
+                            "stage": "Quater Finals",
+                            "id": 6,
+                            "children": [
+                                {
+                                    "name": "Belgium vs Japan",
+                                    "stage": "Last 16",
+                                    "id": 11
+                                },
+                                {
+                                    "name": "Brazil vs Mexico",
+                                    "stage": "Last 16",
+                                    "id": 12
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Croatia vs England",
+                    "stage": "Semi Finals",
+                    "id": 4,
+                    "children": [
+                        {
+                            "name": "Croatia vs Russia",
+                            "stage": "Quater Finals",
+                            "id": 7,
+                            "children": [
+                                {
+                                    "name": "Croatia vs Denmark",
+                                    "stage": "Last 16",
+                                    "id": 13
+                                },
+                                {
+                                    "name": "Russia vs Spain",
+                                    "stage": "Last 16",
+                                    "id": 14
+                                }
+                            ]
+                        },
+                        {
+                            "name": "England vs Sweden",
+                            "stage": "Quater Finals",
+                            "id": 8,
+                            "children": [
+                                {
+                                    "name": "England vs Columbia",
+                                    "stage": "Last 16",
+                                    "id": 15
+                                },
+                                {
+                                    "name": "Sweden vs Switzerland",
+                                    "stage": "Last 16",
+                                    "id": 16
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
