@@ -199,3 +199,9 @@ footer a {
     padding-inline-start: 16px;
     padding-inline-end: 16px;
 }
+
+.nameCountry{
+    left: 10px;
+    background-color: white;
+    text-align: right;
+}
